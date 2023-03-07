@@ -71,3 +71,26 @@ def C(w,c):
     '''returns impedance of a Capacitor given angular freq and capacitance'''
     return -1j/(w*c)
 
+class Amplifier():
+    '''A class to define an STC amplifier.'''
+    def __init__(self, Ri, amp_factor, Ro, type="voltage", src:tuple=None):
+        '''creates an equivalent voltage amplifier of some following type: 'voltage', 'current', 'transresistance', or 'transconductance' with given constructor args'''
+        self.src = src
+        self.Ri = Ri
+        self.Ro = Ro
+        self.type = type
+        if type == "voltage":
+            self.A = amp_factor
+        if type == "current":
+            self.A = amp_factor*(self.Ro/self.Ri)
+        if type == "transresistance":
+            self.A = amp_factor/self.Ri
+        if type == "transconductance":
+            self.A = amp_factor*self.Ro
+        
+    def output(self) -> tuple:
+        '''Returns the amplifier's output as a tuple representing a thevenin equivalent.''' 
+        Vs = self.src[0]
+        Rs = self.src[1]
+        Vi = vdiv(Vs, self.Ri, Rs)
+        return (self.A*Vi, self.Ro)
