@@ -1,4 +1,3 @@
-# ECE_Python README
 ## ECE_Python / Circuits
 _Contains useful methods and classes to make analyzing circuits easier_
 
