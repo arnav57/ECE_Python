@@ -79,6 +79,24 @@ def toThevenin(norton:tuple):
     '''returns the equivalent thevenin verion of a norton equivalent'''
     return (norton[0]*norton[1], norton[1])
 
+def gain_vi(value_in, value_out, db=True):
+    '''returns a unit/unit gain between value_in and value_out. returns decibel gain if db = True'''
+    A = value_out/value_in
+    A_dB = 20*log10(A)
+    if db == True:
+        return A_dB
+    else:
+        return A
+
+def gain_power(power_in, power_out, db=True):
+    A = power_out/power_in
+    A_dB = 10*log10(A)
+    if db == True:
+        return A_dB
+    else:
+        return A
+
+
 class Amplifier():
     '''A class to define an STC amplifier.'''
     def __init__(self, Ri, amp_factor, Ro, type="voltage", src:tuple=None):
