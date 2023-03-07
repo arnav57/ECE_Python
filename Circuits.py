@@ -71,10 +71,19 @@ def C(w,c):
     '''returns impedance of a Capacitor given angular freq and capacitance'''
     return -1j/(w*c)
 
+def toNorton(thevenin:tuple):
+    '''returns the equivalent norton version of a thevenin equivalent'''
+    return (thevenin[0]/thevenin[1] , thevenin[1])
+
+def toThevenin(norton:tuple):
+    '''returns the equivalent thevenin verion of a norton equivalent'''
+    return (norton[0]*norton[1], norton[1])
+
 class Amplifier():
     '''A class to define an STC amplifier.'''
     def __init__(self, Ri, amp_factor, Ro, type="voltage", src:tuple=None):
-        '''creates an equivalent voltage amplifier of some following type: 'voltage', 'current', 'transresistance', or 'transconductance' with given constructor args'''
+        '''creates an equivalent voltage amplifier of some following type: 'voltage', 'current', 'transresistance', or 'transconductance' with given constructor args.
+        the input src should be a tuple representing a Thevenin equivalent (Vth,)'''
         self.src = src
         self.Ri = Ri
         self.Ro = Ro
